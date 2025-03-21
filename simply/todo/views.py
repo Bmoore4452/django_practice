@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 def homepage(request):
     return render(request, "index.html")
 
+
 # Register a User
 def register(request):
     form = CreateUserForm()
@@ -16,9 +17,10 @@ def register(request):
         form = CreateUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect
+            return redirect("login")
     context = {"form": form}
     return render(request, "register.html", context=context)
+
 
 # Login a User
 def login(request):
@@ -32,12 +34,15 @@ def login(request):
 
             if user is not None:
                 auth.login(request, user)
-                return redirect("")
+                return redirect("dashboard")
     context = {"form": form}
     return render(request, "my-login.html", context=context)
 
 
-def dashboard(request): ...
+def dashboard(request):
+    return render(request, "dashboard.html")
 
 
-def logout(request): ...
+def logout(request):
+    auth.logout(request)
+    return redirect("")
