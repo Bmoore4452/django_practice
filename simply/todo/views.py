@@ -4,6 +4,8 @@ from .forms import CreateUserForm, LoginForm
 from django.contrib.auth.models import auth
 from django.contrib.auth import authenticate, login, logout
 
+from django.contrib.auth.decorators import login_required
+
 
 # Create your views here.
 def homepage(request):
@@ -38,7 +40,7 @@ def login(request):
     context = {"form": form}
     return render(request, "my-login.html", context=context)
 
-
+@login_required(login_url="login")
 def dashboard(request):
     return render(request, "dashboard.html")
 
